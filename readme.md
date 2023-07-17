@@ -6,7 +6,7 @@ En este proyecto que hace parte de un curso sobre JS moderno, he creado una impl
 
 - JavaScript
 - HTML5/CSS3, Boostrap
-- Demo: pon aqui la demo hpta
+- [Aquí la DEMO](https://crudcrmjs.netlify.app)
 
 ## Aprendiendo JavaScript
 
