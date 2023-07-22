@@ -10,23 +10,60 @@
     listadoClientes.addEventListener("click", eliminarRegistro);
   });
 
+  // function eliminarRegistro(e) {
+  //   if (e.target.classList.contains("eliminar")) {
+  //     // console.log("correcto");
+  //     const idEliminar = Number(e.target.dataset.cliente);
+  //     const confirmar = confirm("¿Deseas eliminar este cliente?");
+  //     if (confirmar) {
+  //       const transaction = DB.transaction(["crm"], "readwrite");
+  //       const objectStore = transaction.objectStore("crm");
+  //       objectStore.delete(idEliminar);
+  //       transaction.oncomplete = function () {
+  //         console.log("Eliminado");
+  //         e.target.parentElement.parentElement.remove();
+  //       };
+  //       transaction.onerror = function () {
+  //         console.error("Hubo un error al eliminar el registro");
+  //       };
+  //     }
+  //   }
+  // }
+
   function eliminarRegistro(e) {
     if (e.target.classList.contains("eliminar")) {
-      // console.log("correcto");
       const idEliminar = Number(e.target.dataset.cliente);
-      const confirmar = confirm("¿Deseas eliminar este cliente?");
-      if (confirmar) {
-        const transaction = DB.transaction(["crm"], "readwrite");
-        const objectStore = transaction.objectStore("crm");
-        objectStore.delete(idEliminar);
-        transaction.oncomplete = function () {
-          console.log("Eliminado");
-          e.target.parentElement.parentElement.remove();
-        };
-        transaction.onerror = function () {
-          console.error("Hubo un error al eliminar el registro");
-        };
-      }
+
+      // Reemplazar confirm() con SweetAlert
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¡No podrás revertir esto!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const transaction = DB.transaction(["crm"], "readwrite");
+          const objectStore = transaction.objectStore("crm");
+          objectStore.delete(idEliminar);
+          transaction.oncomplete = function () {
+            console.log("Eliminado");
+            e.target.parentElement.parentElement.remove();
+          };
+          transaction.onerror = function () {
+            console.error("Hubo un error al eliminar el registro");
+          };
+          // SweetAlert para mostrar que el registro ha sido eliminado
+          Swal.fire(
+            "¡Eliminado!",
+            "El cliente ha sido eliminado correctamente.",
+            "success"
+          );
+        }
+      });
     }
   }
 
@@ -69,7 +106,7 @@
     };
     abrirConexion.onsuccess = function () {
       DB = abrirConexion.result;
-      const objectStore = DB.transaction('crm').objectStore('crm');
+      const objectStore = DB.transaction("crm").objectStore("crm");
       objectStore.openCursor().onsuccess = function (e) {
         const cursor = e.target.result;
         if (cursor) {
