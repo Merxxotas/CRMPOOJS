@@ -10,26 +10,6 @@
     listadoClientes.addEventListener("click", eliminarRegistro);
   });
 
-  // function eliminarRegistro(e) {
-  //   if (e.target.classList.contains("eliminar")) {
-  //     // console.log("correcto");
-  //     const idEliminar = Number(e.target.dataset.cliente);
-  //     const confirmar = confirm("¿Deseas eliminar este cliente?");
-  //     if (confirmar) {
-  //       const transaction = DB.transaction(["crm"], "readwrite");
-  //       const objectStore = transaction.objectStore("crm");
-  //       objectStore.delete(idEliminar);
-  //       transaction.oncomplete = function () {
-  //         console.log("Eliminado");
-  //         e.target.parentElement.parentElement.remove();
-  //       };
-  //       transaction.onerror = function () {
-  //         console.error("Hubo un error al eliminar el registro");
-  //       };
-  //     }
-  //   }
-  // }
-
   function eliminarRegistro(e) {
     if (e.target.classList.contains("eliminar")) {
       const idEliminar = Number(e.target.dataset.cliente);
